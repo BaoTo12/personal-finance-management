@@ -1079,3 +1079,83 @@ func (Transaction) TableName() string {
 ---
 
 *Database Design Document v1.0 — Last Updated: December 10, 2025*
+
+Frontend Stack
+Core Framework
+Next.js 16.0.8 (with App Router & Turbopack)
+React 19.2.1 - Latest React version
+TypeScript 5 - Type-safe development
+Styling
+Tailwind CSS v4 - Utility-first CSS framework
+Custom CSS Variables - Maglo design tokens (RGBA colors)
+Vanilla CSS - For custom components and animations
+State Management
+Zustand 5.0.9 - Lightweight state management
+Data Fetching
+TanStack Query (React Query) 5.90.12 - Server state management
+TanStack Query DevTools - Development tools
+Forms & Validation
+React Hook Form 7.68.0 - Form handling
+Zod 4.1.13 - Schema validation
+@hookform/resolvers 5.2.2 - Form resolver integration
+UI Components
+Lucide React 0.556.0 - Icon library
+Recharts 3.5.1 - Chart library for data visualization
+Sonner 2.0.7 - Toast notifications
+Authentication
+NextAuth.js 5.0.0-beta.30 - Authentication for Next.js
+Utilities
+clsx 2.1.1 - Conditional className utility
+tailwind-merge 3.4.0 - Merge Tailwind classes
+Design System
+Maglo Financial Management UI Kit - Design specifications
+
+**Color Palette (RGBA):**
+- **Primary & Secondary**
+  - `--primary--color`: rgba(200, 238, 68, 1) - Bright yellow-green
+  - `--secondary--color`: rgba(41, 160, 115, 1) - Teal green
+
+- **Text Colors**
+  - `--text--color---text-1`: rgba(27, 33, 45, 1) - Primary dark text
+  - `--text--color---text-2`: rgba(146, 158, 174, 1) - Secondary text
+  - `--text--color---text-3`: rgba(120, 119, 139, 1) - Tertiary text
+  - `--text--color---pure--white`: rgba(255, 255, 255, 1) - Pure white
+
+- **Dark Mode Colors**
+  - `--darkish--color---dark--b-g`: rgba(28, 26, 46, 1) - Main background
+  - `--darkish--color---dark--shade`: rgba(30, 28, 48, 1) - Shade variant
+  - `--darkish--color---dark-1`: rgba(32, 30, 52, 1) - Card background
+  - `--darkish--color---dark-2`: rgba(40, 37, 65, 1) - Hover background
+  - `--darkish--color---key--black`: rgba(54, 58, 63, 1) - Key black
+
+- **Status Colors**
+  - `--status--color---success`: rgba(25, 208, 118, 1) - Success green
+  - `--status--color---error`: rgba(229, 54, 61, 1) - Error red
+
+- **Light Mode (Gray Scale)**
+  - `--gray---gray-1`: rgba(250, 250, 250, 1)
+  - `--gray---gray-2`: rgba(248, 248, 248, 1)
+  - `--gray---gray-3`: rgba(245, 245, 245, 1)
+  - `--gray---gray-4`: rgba(253, 253, 253, 1)
+  - `--gray---gray-5`: rgba(242, 242, 242, 1)
+
+**Typography System:**
+- **Size 12**: regular (400), medium (500), semi-bold (600)
+- **Size 13**: regular (400)
+- **Size 14**: regular (400), medium (500), semi-bold (600)
+- **Size 16**: regular (400), medium (500), semi-bold (600)
+- **Size 18**: semi-bold (600)
+- **Size 20**: semi-bold (600)
+
+**Design Features:**
+- Dark Mode by default with light mode support
+- Border radius: 0.75rem (12px) to 1.5rem (24px)
+- Shadows: sm, md, lg, xl variants
+- Gradients: Primary, Purple, Pink, Teal, Orange, Blue
+Development Tools
+ESLint 9 - Code linting
+PostCSS - CSS processing
+Turbopack - Fast bundler (Next.js built-in)
+
+
+### colors
