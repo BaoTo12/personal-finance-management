@@ -1,41 +1,5 @@
 # Personal Finance Management App — BA Pre-Development Pack
 
-> Comprehensive pre-development deliverables for a personal finance management app built with **Golang (Gin, GORM, Goose)** stack.
-
----
-
-## 1. Project Overview
-
-### 1.1 Business Context (ビジネス背景)
-Personal finance problems today:
-- Users track spending in scattered tools (Excel, mobile notes).
-- Hard to see spending trends → poor budgeting.
-- No unified dashboard across accounts.
-- Many tools are bloated, slow, or privacy-invasive.
-
-This product targets users who need **clarity, speed, accuracy**, and **local-first privacy**.
-
-### 1.2 Business Objectives
-- Provide a **simple, fast** app for tracking money.
-- Offer **frictionless entry** (quick add UX).
-- Help users achieve spending control and savings goals.
-- Prepare architecture that can scale into: bank sync, ML classification, subscription model.
-
-### 1.3 Value Differentiators
-- Go backend = fast & low latency.
-- Modular domain-driven design → easy to extend.
-- Privacy-first (データ保護) storage.
-- Strong reporting compared to typical note-based tracking.
-
-**Purpose:** Provide individuals a secure, simple, and insightful app to track income, expenses, budgets, and financial goals across accounts. The system supports manual entry and bank integrations (future), automated categorization, budgeting, reporting, and alerts.
-
-**Primary value propositions:**
-- Single place to see cash flows and net worth (見える化).
-- Fast, privacy-conscious processing with server-side Go APIs.
-- Extensible rules and automation for savings and bills.
-
----
-
 ## 2. Goals & Success Metrics (KPI)
 
 - **Adoption:** number of activated users (アクティブユーザー)
