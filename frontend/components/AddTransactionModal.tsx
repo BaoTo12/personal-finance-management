@@ -51,6 +51,30 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
     }
   }, [isOpen, cards, selectedCardId]);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen, onClose]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -123,26 +147,28 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto"
+      className="fixed inset-0 top-0 left-0 right-0 bottom-0 z-50 bg-black/60 backdrop-blur-sm overflow-y-auto"
       onClick={onClose}
+      style={{ margin: 0, padding: 0 }}
     >
-      <div 
-        className="bg-dark-card rounded-3xl border border-white/10 w-full max-w-lg shadow-2xl my-8"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/5">
-          <h2 className="text-xl font-bold text-white">Add Transaction</h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-white/5 rounded-xl text-text-2 hover:text-white transition-colors"
-          >
-            <X size={20} />
-          </button>
-        </div>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div 
+          className="bg-dark-card rounded-3xl border border-white/10 w-full max-w-lg shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 border-b border-white/5">
+            <h2 className="text-xl font-bold text-white">Add Transaction</h2>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-white/5 rounded-xl text-text-2 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Transaction Type */}
           <div>
             <label className="block text-sm font-medium text-text-2 mb-3">Transaction Type</label>
@@ -252,41 +278,27 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
 
           {/* Card Selection */}
           <div>
-            <label htmlFor="card" className="block text-sm font-medium text-text-2 mb-3">
+            <label htmlFor="card" className="block text-sm font-medium text-text-2 mb-2">
               Select Card
             </label>
-            <div className="space-y-2">
-              {cards.map((card) => (
-                <button
-                  key={card.id}
-                  type="button"
-                  onClick={() => setSelectedCardId(card.id)}
-                  className={clsx(
-                    'w-full p-4 rounded-xl border transition-all text-left flex items-center justify-between',
-                    selectedCardId === card.id
-                      ? 'bg-primary/10 border-primary'
-                      : 'bg-dark-bg border-white/5 hover:border-white/20'
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={clsx(
-                      'w-10 h-10 rounded-lg flex items-center justify-center',
-                      selectedCardId === card.id ? 'bg-primary/20 text-primary' : 'bg-white/5 text-text-2'
-                    )}>
-                      <CreditCard size={20} />
-                    </div>
-                    <div>
-                      <div className="font-medium text-white">{card.type} {card.cardNumber}</div>
-                      <div className="text-xs text-text-2">Balance: ${card.balance.toLocaleString()}</div>
-                    </div>
-                  </div>
-                  {selectedCardId === card.id && (
-                    <div className="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
-                      <div className="w-2 h-2 rounded-full bg-text-1" />
-                    </div>
-                  )}
-                </button>
-              ))}
+            <div className="relative">
+              <select
+                id="card"
+                value={selectedCardId}
+                onChange={(e) => setSelectedCardId(e.target.value)}
+                className="w-full px-4 py-3 pr-10 bg-dark-bg border border-white/5 rounded-xl text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
+                required
+              >
+                <option value="" disabled className="text-text-3">
+                  Select a card
+                </option>
+                {cards.map((card) => (
+                  <option key={card.id} value={card.id} className="bg-dark-bg text-white">
+                    {card.type} {card.cardNumber} - Balance: ${card.balance.toLocaleString()}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-text-3 pointer-events-none" />
             </div>
           </div>
 
@@ -313,6 +325,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
             Add Transaction
           </button>
         </form>
+        </div>
       </div>
     </div>
   );
