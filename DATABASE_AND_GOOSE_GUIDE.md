@@ -419,26 +419,6 @@ Welcome to the complete Goose migration course! This is a university-level guide
 
 ### 1.1 The Problem
 
-Imagine you're building ChiBao. You start with a `users` table. Later, you add `cards`, then `transactions`. How do you:
-- **Track** these changes?
-- **Apply** them to production databases?
-- **Rollback** if something goes wrong?
-- **Share** changes with your team?
-
-**Answer:** Database migrations!
-
-### 1.2 What is Goose?
-
-Goose is a database migration tool for Go. It:
-- ✅ Manages schema changes with **versioned SQL files**
-- ✅ Applies migrations **in order**
-- ✅ Supports **rollback** (undo changes)
-- ✅ Works with PostgreSQL, MySQL, SQLite, etc.
-
-**Alternative tools:** golang-migrate, Flyway, Liquibase  
-**Why Goose?** Simple, pure SQL, works great with Go projects.
-
----
 
 ## Chapter 2: Installing Goose
 
@@ -934,22 +914,6 @@ goose -dir db\migrations postgres $env:DATABASE_URL down
 goose -dir db\migrations postgres $env:DATABASE_URL up
 ```
 
-### 7.3 Migration Best Practices
-
-✅ **DO:**
-- Always write both `Up` and `Down`
-- Test migrations on dev database first
-- Use descriptive migration names
-- Keep migrations small and focused
-- Never edit applied migrations in production
-
-❌ **DON'T:**
-- Delete old migration files
-- Change migration timestamps
-- Include destructive operations without backups
-- Put business logic in migrations
-
----
 
 ## Chapter 8: Goose in Go Code
 
@@ -1081,17 +1045,6 @@ DELETE FROM goose_db_version WHERE is_applied = false;
 ```
 
 ---
-
-## Chapter 11: Goose vs Alternatives
-
-| Feature | Goose | golang-migrate | Flyway |
-|---------|-------|----------------|--------|
-| Language | Go | Go | Java |
-| SQL Support | ✅ | ✅ | ✅ |
-| Go Code Migrations | ✅ | ✅ | ❌ |
-| Rollback | ✅ | ✅ | ⚠️ Paid |
-| Ease of Use | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-
 **Verdict:** Goose is perfect for Go projects!
 
 ---
@@ -1125,50 +1078,3 @@ goose -dir db\migrations postgres $env:DATABASE_URL version
 ```
 
 ---
-
-## 🎯 Final Exercise: Set Up ChiBao Database
-
-**Task:** Apply all ChiBao migrations to your database.
-
-**Steps:**
-
-```bash
-# 1. Ensure PostgreSQL is running
-# Check: psql -U postgres -c "SELECT version();"
-
-# 2. Create database
-createdb -U postgres pfm-database
-
-# 3. Set connection string
-$env:DATABASE_URL="postgres://postgres:postgres@localhost:5432/pfm-database?sslmode=disable"
-
-# 4. Create migrations directory
-mkdir -p db\migrations
-
-# 5. Create all 8 migration files (copy from Chapter 6 above)
-# - 20241211120000_init_schema.sql
-# - 20241211120100_add_cards_table.sql
-# - 20241211120200_add_categories_table.sql
-# - 20241211120300_add_transactions_table.sql
-# - 20241211120400_add_tags_tables.sql
-# - 20241211120500_add_refresh_tokens_table.sql
-# - 20241211120600_add_triggers.sql
-# - 20241211120700_seed_categories.sql
-
-# 6. Run migrations
-goose -dir db\migrations postgres $env:DATABASE_URL up
-
-# 7. Verify
-goose -dir db\migrations postgres $env:DATABASE_URL status
-
-# Expected output:
-# Applied At                  Migration
-# ======================================
-# ... 8 migrations listed
-```
-
-**Congratulations!** 🎉 Your ChiBao database is ready!
-
----
-
-*Database Design & Goose Tutorial for ChiBao — Created December 11, 2025*
