@@ -46,14 +46,14 @@ export default function SignInPage() {
             <div className="w-10 h-10 bg-gradient-to-tr from-primary to-green-300 rounded-xl flex items-center justify-center text-text-1 font-bold text-xl shadow-lg shadow-primary/20">
               M
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Maglo.</h1>
+            <h1 className="text-2xl font-bold text-white tracking-tight">ChiBao.</h1>
           </div>
           <h2 className="text-5xl font-bold text-white leading-tight mb-6">
             Manage your <br/>
             <span className="text-primary">finances</span> in one place.
           </h2>
           <p className="text-text-2 text-lg max-w-md">
-            Track expenses, manage subscriptions, and gain insights into your spending habits with Maglo's advanced dashboard.
+            Track expenses, manage subscriptions, and gain insights into your spending habits with ChiBao's advanced dashboard.
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export default function SignInPage() {
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-secondary/20 rounded-full blur-[80px] opacity-40 pointer-events-none"></div>
 
         <div className="relative z-10 text-sm text-text-3">
-          © 2024 Maglo Financial. All rights reserved.
+          © 2024 ChiBao Financial. All rights reserved.
         </div>
       </div>
 

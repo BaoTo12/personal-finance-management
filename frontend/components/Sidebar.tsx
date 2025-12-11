@@ -60,7 +60,7 @@ export const Sidebar: React.FC = () => {
             <div className="w-10 h-10 bg-gradient-to-tr from-primary to-green-300 rounded-xl flex items-center justify-center text-text-1 font-bold text-xl shadow-lg shadow-primary/20">
               M
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Maglo.</h1>
+            <h1 className="text-2xl font-bold text-white tracking-tight">ChiBao.</h1>
           </div>
           <button onClick={toggleSidebar} className="lg:hidden p-1 text-text-2 hover:text-white">
             <X size={24} />
@@ -75,7 +75,6 @@ export const Sidebar: React.FC = () => {
           <NavItemComponent icon={<Wallet size={20} />} label="My Wallet" to="/wallet" />
           
           <div className="px-4 mt-8 mb-3 text-xs font-bold text-text-3 uppercase tracking-widest opacity-80">General</div>
-          <NavItemComponent icon={<CreditCard size={20} />} label="Cards" to="/cards" />
           <NavItemComponent icon={<Settings size={20} />} label="Settings" to="/settings" />
         </nav>
 

@@ -16,6 +16,7 @@ import { useAppStore } from '../store';
 
 export default function DashboardPage() {
   const { getTotalBalance, cards } = useAppStore();
+  const [timePeriod, setTimePeriod] = React.useState<'Weekly' | 'Monthly' | 'Yearly'>('Monthly');
   
   const { data: transactions } = useQuery({
     queryKey: ['transactions'],
@@ -38,66 +39,51 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
           {/* Total Balance */}
           <div className="bg-dark-card rounded-3xl p-6 border border-white/5 relative overflow-hidden group">
-             <div className="absolute top-0 right-0 p-5 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Wallet size={80} />
+             <div className="absolute top-4 right-4 text-primary/10 group-hover:text-primary/20 transition-colors">
+                <Wallet size={32} />
              </div>
              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-2">
-                   <div className="p-2 bg-primary/10 rounded-xl text-primary">
-                      <Wallet size={20} />
-                   </div>
-                   <span className="text-text-2 text-sm font-medium">Total Balance</span>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">${totalBalance.toLocaleString()}</div>
+                <span className="text-text-2 text-sm font-semibold block mb-3">Total Balance</span>
+                <div className="text-2xl md:text-3xl font-bold text-white mb-2 truncate">${totalBalance.toLocaleString()}</div>
                 <div className="flex items-center gap-2">
                    <span className="bg-success/10 text-success text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
                       <TrendingUp size={12} /> +2.4%
                    </span>
-                   <span className="text-text-3 text-xs">from last month</span>
+                   <span className="text-text-3 text-xs font-medium">from last month</span>
                 </div>
              </div>
           </div>
 
           {/* Income */}
           <div className="bg-dark-card rounded-3xl p-6 border border-white/5 relative overflow-hidden group">
-             <div className="absolute top-0 right-0 p-5 opacity-10 group-hover:opacity-20 transition-opacity">
-                <ArrowUpRight size={80} />
+             <div className="absolute top-4 right-4 text-success/10 group-hover:text-success/20 transition-colors">
+                <ArrowUpRight size={32} />
              </div>
              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-2">
-                   <div className="p-2 bg-success/10 rounded-xl text-success">
-                      <ArrowUpRight size={20} />
-                   </div>
-                   <span className="text-text-2 text-sm font-medium">Total Income</span>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">${totalIncome.toLocaleString()}</div>
+                <span className="text-text-2 text-sm font-semibold block mb-3">Total Income</span>
+                <div className="text-2xl md:text-3xl font-bold text-white mb-2 truncate">${totalIncome.toLocaleString()}</div>
                 <div className="flex items-center gap-2">
                    <span className="bg-success/10 text-success text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
                       <TrendingUp size={12} /> +12%
                    </span>
-                   <span className="text-text-3 text-xs">from last month</span>
+                   <span className="text-text-3 text-xs font-medium">from last month</span>
                 </div>
              </div>
           </div>
 
           {/* Expense */}
           <div className="bg-dark-card rounded-3xl p-6 border border-white/5 relative overflow-hidden group">
-             <div className="absolute top-0 right-0 p-5 opacity-10 group-hover:opacity-20 transition-opacity">
-                <ArrowDownLeft size={80} />
+             <div className="absolute top-4 right-4 text-error/10 group-hover:text-error/20 transition-colors">
+                <ArrowDownLeft size={32} />
              </div>
              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-2">
-                   <div className="p-2 bg-error/10 rounded-xl text-error">
-                      <ArrowDownLeft size={20} />
-                   </div>
-                   <span className="text-text-2 text-sm font-medium">Total Expense</span>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">${totalExpense.toLocaleString()}</div>
+                <span className="text-text-2 text-sm font-semibold block mb-3">Total Expense</span>
+                <div className="text-2xl md:text-3xl font-bold text-white mb-2 truncate">${totalExpense.toLocaleString()}</div>
                 <div className="flex items-center gap-2">
                    <span className="bg-error/10 text-error text-xs font-bold px-2 py-1 rounded-lg flex items-center gap-1">
                       <TrendingUp size={12} className="rotate-180" /> +5%
                    </span>
-                   <span className="text-text-3 text-xs">from last month</span>
+                   <span className="text-text-3 text-xs font-medium">from last month</span>
                 </div>
              </div>
           </div>
@@ -111,14 +97,21 @@ export default function DashboardPage() {
               <p className="text-sm text-text-2 mt-1">Overview of your income and expenses</p>
             </div>
             <div className="flex bg-dark-bg p-1 rounded-xl border border-white/5">
-               {['Weekly', 'Monthly', 'Yearly'].map((t, i) => (
-                 <button key={t} className={clsx("px-4 py-2 text-xs font-semibold rounded-lg transition-all", i === 1 ? "bg-primary text-text-1 shadow-md" : "text-text-2 hover:text-white")}>
+               {['Weekly', 'Monthly', 'Yearly'].map((t) => (
+                 <button 
+                   key={t} 
+                   onClick={() => setTimePeriod(t as 'Weekly' | 'Monthly' | 'Yearly')}
+                   className={clsx(
+                     "px-4 py-2 text-xs font-semibold rounded-lg transition-all",
+                     timePeriod === t ? "bg-primary text-text-1 shadow-md" : "text-text-2 hover:text-white"
+                   )}
+                 >
                    {t}
                  </button>
                ))}
             </div>
           </div>
-          <FinancialChart />
+          <FinancialChart timePeriod={timePeriod} />
         </div>
 
         {/* Recent Transactions List */}
@@ -148,17 +141,27 @@ export default function DashboardPage() {
         
         {/* My Cards Section */}
         <div className="space-y-4">
-           <div className="flex items-center justify-between px-1">
+           <div className="px-1">
               <h3 className="text-xl font-bold text-white">My Cards</h3>
-              <button className="text-sm font-semibold text-primary hover:underline">+ Add Card</button>
            </div>
            
            <div className="space-y-4">
-              {cards.map((card, idx) => (
+              {cards.slice(0, 2).map((card, idx) => (
                  <div key={card.id} className={clsx("transition-transform duration-300 hover:scale-[1.02]", idx > 0 ? "opacity-90 hover:opacity-100" : "")}>
                    <CreditCard card={card} />
                  </div>
               ))}
+              
+              {cards.length > 2 && (
+                <Link 
+                  to="/wallet" 
+                  className="block w-full py-4 text-center bg-dark-bg hover:bg-white/5 border border-white/5 rounded-3xl text-text-2 hover:text-white font-semibold transition-all group"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    See More <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              )}
            </div>
         </div>
 

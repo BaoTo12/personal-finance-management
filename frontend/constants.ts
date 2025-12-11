@@ -97,6 +97,24 @@ export const MOCK_CHART_DATA: MonthlyStat[] = [
   { month: 'Jul', income: 7200, expense: 4200 },
 ];
 
+// Card gradient colors
+export const CARD_COLORS = [
+  'from-[#d4fc79] to-[#96e6a1]', // Green
+  'from-[#434343] to-[#000000]', // Dark
+  'from-[#667eea] to-[#764ba2]', // Purple
+  'from-[#f093fb] to-[#f5576c]', // Pink
+  'from-[#4facfe] to-[#00f2fe]', // Blue
+  'from-[#fa709a] to-[#fee140]', // Sunset
+  'from-[#30cfd0] to-[#330867]', // Teal to Deep Purple
+  'from-[#a8edea] to-[#fed6e3]', // Pastel
+  'from-[#ff9a56] to-[#ff6a88]', // Orange Pink
+  'from-[#ffecd2] to-[#fcb69f]', // Peach
+];
+
+export const getRandomCardColor = () => {
+  return CARD_COLORS[Math.floor(Math.random() * CARD_COLORS.length)];
+};
+
 // Transaction categories
 export const EXPENSE_CATEGORIES = [
   'Groceries',
@@ -137,7 +155,10 @@ export const MOCK_CARDS: CardDetails[] = [
     holderName: 'Alex Morgan',
     expiryDate: '12/26',
     type: 'Visa',
-    variant: 'primary'
+    variant: 'primary',
+    color: 'from-[#d4fc79] to-[#96e6a1]',
+    alias: 'Main Card',
+    isFrozen: false
   },
   {
     id: 'c2',
@@ -146,6 +167,9 @@ export const MOCK_CARDS: CardDetails[] = [
     holderName: 'Alex Morgan',
     expiryDate: '09/25',
     type: 'MasterCard',
-    variant: 'dark'
+    variant: 'dark',
+    color: 'from-[#434343] to-[#000000]',
+    alias: 'Savings Card',
+    isFrozen: false
   }
 ];

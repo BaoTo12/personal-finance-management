@@ -153,7 +153,7 @@ export const AddTransactionModal: React.FC<AddTransactionModalProps> = ({ isOpen
     >
       <div className="min-h-screen flex items-center justify-center p-4">
         <div 
-          className="bg-dark-card rounded-3xl border border-white/10 w-full max-w-lg shadow-2xl"
+          className="bg-dark-card rounded-3xl border border-white/10 w-full max-w-md shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}

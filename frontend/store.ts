@@ -18,6 +18,9 @@ interface AppState {
   updateCardBalance: (cardId: string, amount: number) => void;
   addMoneyToCard: (cardId: string, amount: number) => void;
   getTotalBalance: () => number;
+  addCard: (card: Omit<CardDetails, 'id' | 'variant' | 'isFrozen'>) => void;
+  toggleFreezeCard: (cardId: string) => void;
+  removeCard: (cardId: string) => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -60,6 +63,34 @@ export const useAppStore = create<AppState>()(
         const state = get();
         return state.cards.reduce((total, card) => total + card.balance, 0);
       },
+
+      // Add new card
+      addCard: (card) =>
+        set((state) => ({
+          cards: [
+            ...state.cards,
+            {
+              ...card,
+              id: `c${Date.now()}`,
+              variant: state.cards.length === 0 ? 'primary' : 'dark',
+              isFrozen: false,
+            },
+          ],
+        })),
+
+      // Toggle freeze/unfreeze card
+      toggleFreezeCard: (cardId) =>
+        set((state) => ({
+          cards: state.cards.map((card) =>
+            card.id === cardId ? { ...card, isFrozen: !card.isFrozen } : card
+          ),
+        })),
+
+      // Remove card
+      removeCard: (cardId) =>
+        set((state) => ({
+          cards: state.cards.filter((card) => card.id !== cardId),
+        })),
     }),
     {
       name: 'maglo-storage',

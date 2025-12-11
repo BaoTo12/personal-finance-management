@@ -2,12 +2,19 @@ import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { MOCK_CHART_DATA } from '../constants';
 
-export const FinancialChart: React.FC = () => {
+interface FinancialChartProps {
+  timePeriod?: 'Weekly' | 'Monthly' | 'Yearly';
+}
+
+export const FinancialChart: React.FC<FinancialChartProps> = ({ timePeriod = 'Monthly' }) => {
+  // Filter or transform data based on timePeriod
+  const chartData = MOCK_CHART_DATA; // For now using same data, can be enhanced later
+  
   return (
     <div className="w-full h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
-          data={MOCK_CHART_DATA}
+          data={chartData}
           margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
         >
           <defs>

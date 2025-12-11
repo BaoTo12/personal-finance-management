@@ -28,7 +28,6 @@ const App: React.FC = () => {
                   <Route path="/" element={<DashboardPage />} />
                   <Route path="/transactions" element={<TransactionsPage />} />
                   <Route path="/wallet" element={<WalletPage />} />
-                  <Route path="/cards" element={<WalletPage />} />
                   <Route path="/settings" element={<SettingsPage />} />
                   
                   {/* Fallback for any unknown protected routes -> Redirect to Dashboard */}

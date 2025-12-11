@@ -115,6 +115,22 @@
       ::-webkit-scrollbar-thumb:hover {
         background: var(--darkish--color---dark-2);
       }
+      
+      /* Card animations */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-slide-up {
+        animation: slideUp 0.5s ease-out forwards;
+      }
     </style>
   <script type="importmap">
 {

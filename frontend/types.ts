@@ -42,6 +42,9 @@ export interface CardDetails {
   expiryDate: string;
   type: 'Visa' | 'MasterCard';
   variant: 'primary' | 'dark';
+  color?: string; // Gradient color for the card
+  alias?: string; // User-friendly name for the card
+  isFrozen?: boolean; // Whether the card is frozen
 }
 
 export interface NavItem {
