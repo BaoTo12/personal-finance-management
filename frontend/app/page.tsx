@@ -12,8 +12,11 @@ import { ArrowUpRight, ArrowDownLeft, Wallet, Plus, MoreHorizontal, ArrowRight, 
 import { IconBox } from '../components/ui/IconBox';
 import { clsx } from 'clsx';
 import { Link } from 'react-router-dom';
+import { useAppStore } from '../store';
 
 export default function DashboardPage() {
+  const { getTotalBalance, cards } = useAppStore();
+  
   const { data: transactions } = useQuery({
     queryKey: ['transactions'],
     queryFn: () => Promise.resolve(MOCK_TRANSACTIONS),
@@ -23,7 +26,7 @@ export default function DashboardPage() {
   // Calculate totals for display
   const totalIncome = 42593.00;
   const totalExpense = 12405.00;
-  const totalBalance = 54200.50;
+  const totalBalance = getTotalBalance();
 
   return (
     <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 lg:gap-8 pb-8">
@@ -151,7 +154,7 @@ export default function DashboardPage() {
            </div>
            
            <div className="space-y-4">
-              {MOCK_CARDS.map((card, idx) => (
+              {cards.map((card, idx) => (
                  <div key={card.id} className={clsx("transition-transform duration-300 hover:scale-[1.02]", idx > 0 ? "opacity-90 hover:opacity-100" : "")}>
                    <CreditCard card={card} />
                  </div>

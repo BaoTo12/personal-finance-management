@@ -25,15 +25,7 @@ export interface Transaction {
   icon: string;
   notes?: string;
   paymentMethod?: string;
-}
-
-export interface Invoice {
-  id: string;
-  clientName: string;
-  amount: number;
-  dueDate: string;
-  status: 'Paid' | 'Unpaid' | 'Overdue';
-  avatarUrl?: string;
+  cardId?: string; // Card from which money is taken/added
 }
 
 export interface MonthlyStat {

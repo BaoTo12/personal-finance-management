@@ -1,4 +1,4 @@
-import { Transaction, TransactionType, MonthlyStat, CardDetails, Invoice } from './types';
+import { Transaction, TransactionType, MonthlyStat, CardDetails } from './types';
 
 export const MOCK_TRANSACTIONS: Transaction[] = [
   {
@@ -97,6 +97,38 @@ export const MOCK_CHART_DATA: MonthlyStat[] = [
   { month: 'Jul', income: 7200, expense: 4200 },
 ];
 
+// Transaction categories
+export const EXPENSE_CATEGORIES = [
+  'Groceries',
+  'Dining',
+  'Transportation',
+  'Utilities',
+  'Entertainment',
+  'Shopping',
+  'Healthcare',
+  'Subscription',
+  'Travel',
+  'Education',
+  'Other'
+];
+
+export const INCOME_CATEGORIES = [
+  'Salary',
+  'Freelance',
+  'Investment',
+  'Business',
+  'Gift',
+  'Bonus',
+  'Other'
+];
+
+export const TRANSFER_CATEGORIES = [
+  'Transfer',
+  'Savings',
+  'Investment Transfer',
+  'Other'
+];
+
 export const MOCK_CARDS: CardDetails[] = [
   {
     id: 'c1',
@@ -115,40 +147,5 @@ export const MOCK_CARDS: CardDetails[] = [
     expiryDate: '09/25',
     type: 'MasterCard',
     variant: 'dark'
-  }
-];
-
-export const MOCK_INVOICES: Invoice[] = [
-  {
-    id: 'inv_001',
-    clientName: 'Design Studio Inc.',
-    amount: 2500.00,
-    dueDate: '2023-11-05',
-    status: 'Paid',
-    avatarUrl: 'https://picsum.photos/seed/design/100'
-  },
-  {
-    id: 'inv_002',
-    clientName: 'TechFlow Systems',
-    amount: 4800.50,
-    dueDate: '2023-11-12',
-    status: 'Unpaid',
-    avatarUrl: 'https://picsum.photos/seed/tech/100'
-  },
-  {
-    id: 'inv_003',
-    clientName: 'Marketing Gurus',
-    amount: 1200.00,
-    dueDate: '2023-10-28',
-    status: 'Overdue',
-    avatarUrl: 'https://picsum.photos/seed/marketing/100'
-  },
-  {
-    id: 'inv_004',
-    clientName: 'Global Ventures',
-    amount: 8500.00,
-    dueDate: '2023-11-20',
-    status: 'Unpaid',
-    avatarUrl: 'https://picsum.photos/seed/global/100'
   }
 ];

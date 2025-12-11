@@ -2,12 +2,14 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { MOCK_TRANSACTIONS } from '../../constants';
 import { TransactionItem } from '../../components/TransactionItem';
-import { Search, Filter, Download, Calendar, X, ChevronDown, RefreshCw } from 'lucide-react';
+import { AddTransactionModal } from '../../components/AddTransactionModal';
+import { Search, Filter, Download, Calendar, X, ChevronDown, RefreshCw, Plus } from 'lucide-react';
 import { clsx } from 'clsx';
-import { TransactionType } from '../../types';
+import { TransactionType, Transaction } from '../../types';
+import { useAppStore } from '../../store';
 
 export default function TransactionsPage() {
   // Filter States
@@ -16,12 +18,82 @@ export default function TransactionsPage() {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+  const { updateCardBalance } = useAppStore();
 
   const { data: transactions } = useQuery({
     queryKey: ['transactions'],
-    queryFn: () => Promise.resolve([...MOCK_TRANSACTIONS, ...MOCK_TRANSACTIONS, ...MOCK_TRANSACTIONS]), // Duplicated for demo scroll
+    queryFn: () => Promise.resolve(MOCK_TRANSACTIONS),
     initialData: MOCK_TRANSACTIONS
   });
+
+  // Add transaction mutation
+  const addTransactionMutation = useMutation({
+    mutationFn: async (newTransaction: {
+      title: string;
+      category: string;
+      amount: number;
+      type: TransactionType;
+      cardId: string;
+      notes?: string;
+    }) => {
+      // Validate amount
+      if (newTransaction.amount <= 0) {
+        throw new Error('Amount must be greater than zero');
+      }
+
+      // Determine icon based on transaction type
+      let icon = 'ShoppingBasket';
+      if (newTransaction.type === TransactionType.INCOME) {
+        icon = 'Briefcase';
+      } else if (newTransaction.type === TransactionType.TRANSFER) {
+        icon = 'ArrowRightLeft';
+      }
+
+      // Create transaction object
+      const transaction: Transaction = {
+        id: `t_${Date.now()}`,
+        title: newTransaction.title,
+        category: newTransaction.category,
+        amount: newTransaction.amount,
+        date: new Date().toISOString(),
+        type: newTransaction.type,
+        status: 'Completed',
+        icon: icon,
+        notes: newTransaction.notes,
+        cardId: newTransaction.cardId,
+      };
+
+      // Update card balance based on transaction type
+      if (newTransaction.type === TransactionType.EXPENSE) {
+        updateCardBalance(newTransaction.cardId, -newTransaction.amount);
+      } else if (newTransaction.type === TransactionType.INCOME) {
+        updateCardBalance(newTransaction.cardId, newTransaction.amount);
+      } else if (newTransaction.type === TransactionType.TRANSFER) {
+        // For transfers, deduct from the selected card
+        // In a real app, you might want to add a "to card" field
+        updateCardBalance(newTransaction.cardId, -newTransaction.amount);
+      }
+
+      return transaction;
+    },
+    onSuccess: (newTransaction) => {
+      queryClient.setQueryData(['transactions'], (old: Transaction[] = []) => [newTransaction, ...old]);
+    },
+  });
+
+  const handleAddTransaction = (transactionData: {
+    title: string;
+    category: string;
+    amount: number;
+    type: TransactionType;
+    cardId: string;
+    notes?: string;
+  }) => {
+    addTransactionMutation.mutate(transactionData);
+  };
 
   // Extract Unique Categories dynamically
   const categories = useMemo(() => {
@@ -95,8 +167,10 @@ export default function TransactionsPage() {
             <Download size={16} />
             Export CSV
           </button>
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-primary text-text-1 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-            <Filter size={16} />
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary text-text-1 rounded-xl text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+            <Plus size={16} />
             Add Transaction
           </button>
         </div>
@@ -231,6 +305,13 @@ export default function TransactionsPage() {
           </div>
         )}
       </div>
+
+      {/* Add Transaction Modal */}
+      <AddTransactionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleAddTransaction}
+      />
     </div>
   );
 }

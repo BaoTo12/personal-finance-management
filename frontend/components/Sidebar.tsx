@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { LayoutDashboard, Wallet, ArrowRightLeft, FileText, User, Settings, LogOut, CreditCard, X } from 'lucide-react';
+import { LayoutDashboard, Wallet, ArrowRightLeft, User, Settings, LogOut, CreditCard, X } from 'lucide-react';
 import { useAppStore } from '../store';
 import { clsx } from 'clsx';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -73,7 +73,6 @@ export const Sidebar: React.FC = () => {
           <NavItemComponent icon={<LayoutDashboard size={20} />} label="Dashboard" to="/" />
           <NavItemComponent icon={<ArrowRightLeft size={20} />} label="Transactions" to="/transactions" />
           <NavItemComponent icon={<Wallet size={20} />} label="My Wallet" to="/wallet" />
-          <NavItemComponent icon={<FileText size={20} />} label="Invoices" to="/invoices" />
           
           <div className="px-4 mt-8 mb-3 text-xs font-bold text-text-3 uppercase tracking-widest opacity-80">General</div>
           <NavItemComponent icon={<CreditCard size={20} />} label="Cards" to="/cards" />

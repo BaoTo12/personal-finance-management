@@ -56,4 +56,22 @@ func main() {
 		ConnMaxLifetime: cfg.Database.ConnMaxLifetime,
 		DebugLevel:      cfg.Database.DebugLevel,
 	}, log)
+
+	// Repositories
+
+	// Infrastructure Services
+
+	// Application Services
+
+	// Validator
+
+	// Handlers
+
+	// Middleware
+
+	// Router
+
+	// Server
+
+	// Graceful shutdown
 }
