@@ -78,3 +78,11 @@ func (cfg Config) DSN() string {
 		cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.Name,
 	)
 }
+
+func (d *Database) Close() error {
+	sqlDB, err := d.DB.DB()
+	if err != nil {
+		return err
+	}
+	return sqlDB.Close()
+}
