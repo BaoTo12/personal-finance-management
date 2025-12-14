@@ -7,15 +7,12 @@
 package main
 
 import (
-	"pfn-backend/internal/app/postgres"
-	"pfn-backend/internal/config"
-	"pfn-backend/internal/pkg/logger"
 	"pfn-backend/internal/provider"
 )
 
 // Injectors from wire.go:
 
-func InitializeApplication(configPath string) (*Application, error) {
+func InitializeApplication(configPath string) (*provider.Server, error) {
 	config, err := provider.ProvideConfig(configPath)
 	if err != nil {
 		return nil, err
@@ -28,18 +25,27 @@ func InitializeApplication(configPath string) (*Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	application := &Application{
-		Logger: logger,
-		DB:     database,
-		Config: config,
-	}
-	return application, nil
-}
-
-// wire.go:
-
-type Application struct {
-	Logger *logger.Logger
-	DB     *postgres.Database
-	Config *config.Config
+	userRepository := provider.ProvideUserRepository(database)
+	refreshTokenRepository := provider.ProvideRefreshTokenRepository(database)
+	jwtManager := provider.ProvideJWTManager(config)
+	service := provider.ProvideAuthService(userRepository, refreshTokenRepository, jwtManager, logger)
+	authHandler := provider.ProvideAuthHandler(service, logger)
+	userService := provider.ProvideUserService(userRepository)
+	userHandler := provider.ProvideUserHandler(userService)
+	cardRepository := provider.ProvideCardRepository(database)
+	cardService := provider.ProvideCardService(cardRepository)
+	cardHandler := provider.ProvideCardHandler(cardService)
+	transactionRepository := provider.ProvideTransactionRepository(database)
+	transactionService := provider.ProvideTransactionService(transactionRepository, cardRepository)
+	transactionHandler := provider.ProvideTransactionHandler(transactionService)
+	categoryRepository := provider.ProvideCategoryRepository(database)
+	categoryService := provider.ProvideCategoryService(categoryRepository)
+	categoryHandler := provider.ProvideCategoryHandler(categoryService)
+	authMiddleware := provider.ProvideAuthMiddleware(jwtManager, logger)
+	loggerMiddleware := provider.ProvideLoggerMiddleware(logger)
+	corsMiddleware := provider.ProvideCORSMiddleware(config)
+	recoveryMiddleware := provider.ProvideRecoveryMiddleware(logger)
+	router := provider.ProvideRouter(config, authHandler, userHandler, cardHandler, transactionHandler, categoryHandler, authMiddleware, loggerMiddleware, corsMiddleware, recoveryMiddleware)
+	server := provider.ProvideServer(config, router, database, logger)
+	return server, nil
 }

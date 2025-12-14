@@ -2,31 +2,29 @@ package main
 
 import (
 	"flag"
-	"fmt"
-	"os"
+	"log"
 
-	"github.com/subosito/gotenv"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	var configPath string
-	flag.StringVar(&configPath, "config", "backend\\internal\\config", "path to config file")
+	// Load environment variables
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+
+	// Parse command line flags
+	configPath := flag.String("config", "", "Path to configuration file")
 	flag.Parse()
 
-	if err := gotenv.Load(); err != nil {
-		fmt.Println("No .env file found, using environment variables")
-	}
-
-	app, err := InitializeApplication(configPath)
+	// Initialize application with Wire
+	server, err := InitializeApplication(*configPath)
 	if err != nil {
-		fmt.Printf("Failed to initialize application: %v\n", err)
-		os.Exit(1)
+		log.Fatalf("Failed to initialize application: %v", err)
 	}
-	app.Logger.Info("Starting CinemaOS Backend")
 
-	defer func() {
-		if app.DB != nil {
-			app.DB.Close()
-		}
-	}()
+	// Start server with graceful shutdown
+	if err := server.Start(); err != nil {
+		log.Fatalf("Server error: %v", err)
+	}
 }
