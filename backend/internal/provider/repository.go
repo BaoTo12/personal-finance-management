@@ -6,21 +6,21 @@ import (
 )
 
 func ProvideUserRepository(db *postgres.Database) repository.UserRepository {
-	return repository.NewUserRepository(db.DB)
+	return postgres.NewUserRepository(db.DB)
 }
 
 func ProvideCardRepository(db *postgres.Database) repository.CardRepository {
-	return repository.NewCardRepository(db.DB)
+	return postgres.NewCardRepository(db.DB)
 }
 
 func ProvideTransactionRepository(db *postgres.Database) repository.TransactionRepository {
-	return repository.NewTransactionRepository(db.DB)
+	return postgres.NewTransactionRepository(db.DB)
 }
 
 func ProvideCategoryRepository(db *postgres.Database) repository.CategoryRepository {
-	return repository.NewCategoryRepository(db.DB)
+	return postgres.NewCategoryRepository(db.DB)
 }
 
 func ProvideRefreshTokenRepository(db *postgres.Database) repository.RefreshTokenRepository {
-	return repository.NewRefreshTokenRepository(db.DB)
+	return postgres.NewRefreshTokenRepository(db.DB)
 }
