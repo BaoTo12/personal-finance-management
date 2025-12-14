@@ -12,7 +12,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=pfm-database
+      - POSTGRES_DB=personal_finance
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -25,4 +25,4 @@ volumes:
   redis_data:
 
 
-# postgres://postgres:postgres@localhost:5432/pfm-database
+# Connection string: postgres://postgres:postgres@localhost:5432/personal_finance?sslmode=disable

@@ -3,9 +3,9 @@ DB_HOST ?= localhost
 DB_PORT ?= 5432
 DB_USER ?= postgres
 DB_PASSWORD ?= postgres
-DB_NAME ?= pfm-database
+DB_NAME ?= personal_finance
 # DB_DSN := "host=$(DB_HOST) port=$(DB_PORT) user=$(DB_USER) password=$(DB_PASS) dbname=$(DB_NAME)"
-DB_DSN := "postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)"
+DB_DSN := "postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable"
 # Migration directory
 MIGRATIONS_DIR := ./db/migrations
 
