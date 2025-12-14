@@ -163,3 +163,8 @@ func Duration(key string, val time.Duration) zap.Field {
 func Any(key string, val any) zap.Field {
 	return zap.Any(key, val)
 }
+
+// Error alias for zap.Error
+func Error(err error) zap.Field {
+	return zap.Error(err)
+}
